@@ -1,0 +1,757 @@
+/* 基础重置和全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Clicker掉落效果样式 - 优化版 */
+.clicker {
+    position: fixed;
+    top: -100px;
+    width: 60px;
+    height: 60px;
+    background-image: url('images/Clicker.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    user-select: none;
+    z-index: 100;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    transform-origin: center;
+}
+
+.special-clicker {
+    width: 80px;
+    height: 80px;
+    z-index: 110;
+    filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(255,215,0,0.5));
+    }
+    to {
+        filter: drop-shadow(0 0 15px rgba(255,215,0,0.9));
+    }
+}
+
+/* 游戏外层容器 */
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 30px;
+}
+
+/* 主游戏容器 */
+.container {
+    position: relative;
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 游戏标题 */
+.game-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 计数器样式 */
+.counter-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0 25px;
+}
+
+.counter {
+    font-size: 48px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    min-width: 150px;
+}
+
+.counter-animate {
+    animation: pop 0.3s ease;
+    color: #4CAF50;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* 按钮样式 */
+.click-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    margin: 0 auto 20px;
+    font-size: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.click-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+
+.click-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.reset-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 100;
+    transition: all 0.2s;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+/* 商店区域 */
+.shop {
+    margin: 20px 0;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.shop h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #555;
+    text-align: center;
+}
+
+.shop-item {
+    padding: 12px 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    font-size: 16px;
+}
+
+.shop-item:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+/* 动物容器 */
+.animals-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    margin: 15px 0;
+    overflow: hidden;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    border: 2px dashed #ddd;
+}
+
+/* 动物和物品样式 */
+.cat {
+    width: 90px;
+    height: 90px;
+    background-image: url('images/cat.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: transform 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.2));
+}
+
+.cow {
+    width: 130px;
+    height: 130px;
+    background-image: url('images/cow.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: transform 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.2));
+}
+
+.chicken {
+    width: 80px;
+    height: 80px;
+    background-image: url('images/chicken.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: transform 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+.pig {
+    width: 120px;
+    height: 120px;
+    background-image: url('images/pig.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: transform 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.2));
+}
+
+.milk {
+    width: 70px;
+    height: 70px;
+    background-image: url('images/milk.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: all 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 3px rgba(255,255,255,0.7));
+}
+
+.egg {
+    width: 45px;
+    height: 55px;
+    background-image: url('images/egg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: all 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 2px rgba(255,255,255,0.5));
+}
+
+/* 特殊容器样式 */
+.special-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e0e0e0;
+}
+
+#fishTankContainer {
+    background-color: #e0f7fa;
+    border-color: #4dd0e1;
+}
+
+#specialItemsContainer {
+    background-color: #fff9e6;
+    border-color: #ffd700;
+}
+
+.container-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.container-header h3 {
+    font-size: 20px;
+    color: #333;
+    flex-grow: 1;
+    margin-right: 15px;
+}
+
+.container-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.container-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.special-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 特殊按钮颜色 */
+#addEggBtn {
+    background-color: #ffd700;
+    color: #333;
+}
+
+#fryEggBtn {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+#addCatToTowerBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#addFishToPanBtn {
+    background-color: #26c6da;
+    color: white;
+}
+
+#buyFish {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#buySquid {
+    background-color: #9c27b0;
+    color: white;
+}
+
+/* 容器内容区域 */
+.container-content {
+    position: relative;
+    min-height: 200px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+/* 煎蛋区、猫爬架和鱼缸区域 */
+.frying-area, #catTowerArea, #fishTankArea {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin-top: 15px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+}
+
+#fishTankArea {
+    background-image: url('images/fish_tank.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.9;
+}
+
+/* 煎蛋、烤鱼、烤鸡和烤肠样式 */
+.fried-egg {
+    width: 70px;
+    height: 70px;
+    background-image: url('images/fried_egg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    transition: opacity 0.5s;
+    z-index: 10;
+}
+
+.grilled-fish {
+    width: 90px;
+    height: 70px;
+    background-image: url('images/grilled_fish.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    z-index: 10;
+}
+
+.grilled-chicken {
+    width: 100px;
+    height: 100px;
+    background-image: url('images/grilled_chicken.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    z-index: 10;
+}
+
+.sausage {
+    width: 70px;
+    height: 35px;
+    background-image: url('images/sausage.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    z-index: 10;
+}
+
+/* 鱼和墨鱼样式 */
+.fish {
+    width: 70px;
+    height: 50px;
+    background-image: url('images/fish.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: all 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+    z-index: 5;
+    animation: swim 3s infinite alternate;
+}
+
+.squid {
+    width: 70px;
+    height: 50px;
+    background-image: url('images/squid.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    transition: all 0.1s linear;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+    z-index: 5;
+    animation: swim 3s infinite alternate;
+}
+
+@keyframes swim {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(8deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* 猫爬架上的猫 */
+.cat-in-tower {
+    width: 50px;
+    height: 50px;
+    background-image: url('images/cat_in_tower.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+    animation: bounce 1s infinite alternate;
+    z-index: 10;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+/* 进度条样式 */
+.progress-bar {
+    height: 18px;
+    background-color: #e0e0e0;
+    border-radius: 9px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #ff9800;
+    transition: width 0.3s;
+}
+
+.frying-status {
+    font-size: 15px;
+    color: #666;
+}
+
+/* 特殊物品样式 */
+.special-item {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    transition: transform 0.3s;
+}
+
+.special-item:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.special-item::after {
+    content: attr(data-rarity);
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 3px;
+    padding: 1px 3px;
+}
+
+/* 稀有度颜色 */
+.rarity-common { background-color: #b0bec5; }
+.rarity-uncommon { background-color: #81c784; }
+.rarity-rare { background-color: #64b5f6; }
+.rarity-epic { background-color: #ba68c8; }
+.rarity-legendary { background-color: #ffb74d; }
+
+/* 收集统计样式 */
+#collectionStats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 8px;
+}
+
+#collectionStats div {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 5px;
+}
+
+/* 提示框样式 */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(150px);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+    font-size: 16px;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-error {
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
+/* 音乐提示 */
+#musicHint {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    margin-top: 15px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-wrapper {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 15px;
+        max-width: 95%;
+    }
+
+    .game-title {
+        font-size: 28px;
+    }
+
+    .counter {
+        font-size: 42px;
+    }
+
+    .animals-container {
+        height: 350px;
+    }
+
+    /* 动物响应式调整 */
+    .cat {
+        width: 70px;
+        height: 70px;
+    }
+
+    .cow {
+        width: 100px;
+        height: 100px;
+    }
+
+    .chicken {
+        width: 60px;
+        height: 60px;
+    }
+
+    .pig {
+        width: 90px;
+        height: 90px;
+    }
+
+    .milk {
+        width: 50px;
+        height: 50px;
+    }
+
+    .egg {
+        width: 35px;
+        height: 45px;
+    }
+
+    .fried-egg {
+        width: 60px;
+        height: 60px;
+    }
+
+    .grilled-fish {
+        width: 100px;
+        height: 80px;
+    }
+
+    .grilled-chicken {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sausage {
+        width: 100px;
+        height: 50px;
+    }
+
+    .fish, .squid {
+        width: 60px;
+        height: 45px;
+    }
+
+    .clicker {
+        width: 50px;
+        height: 50px;
+    }
+
+    .special-item {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .game-title {
+        font-size: 24px;
+    }
+
+    .counter {
+        font-size: 36px;
+    }
+
+    .click-btn {
+        padding: 12px 0;
+        font-size: 18px;
+    }
+
+    .animals-container {
+        height: 300px;
+    }
+
+    .clicker {
+        width: 40px;
+        height: 40px;
+    }
+
+    .special-item {
+        width: 40px;
+        height: 40px;
+    }
+
+    #collectionStats {
+        grid-template-columns: 1fr;
+    }
+}

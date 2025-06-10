@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetClicker</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- 音频元素 -->
+    <audio id="bgMusic" loop>
+        <source src="sounds/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound">
+        <source src="sounds/click.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="coinSound">
+        <source src="sounds/coin.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="meowSound">
+        <source src="sounds/meow.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="cowSound">
+        <source src="sounds/cow.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="milkSound">
+        <source src="sounds/milk.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="chickenSound">
+        <source src="sounds/chicken.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="eggSound">
+        <source src="sounds/egg.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fryingPanSound">
+        <source src="sounds/frying_pan.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="friedEggSound">
+        <source src="sounds/fried_egg.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="catTowerSound">
+        <source src="sounds/cat_tower.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fishTankSound">
+        <source src="sounds/fish_tank.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fishSound">
+        <source src="sounds/fish.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="grilledFishSound">
+        <source src="sounds/grilled_fish.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="squidSound">
+        <source src="sounds/squid.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="itemSound">
+        <source src="sounds/item.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="pigSound">
+        <source src="sounds/pig.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="grilledChickenSound">
+        <source src="sounds/grilled_chicken.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sausageSound">
+        <source src="sounds/sausage.mp3" type="audio/mpeg">
+    </audio>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="container">
+        <div class="game-title">NetClicker</div>
+
+        <div class="counter-wrapper">
+            <div class="counter" id="counter">0</div>
+        </div>
+
+        <button class="click-btn" id="clickBtn">点击我!</button>
+        <button class="reset-btn" id="resetBtn">重置</button>
+
+        <div class="shop">
+            <h2>商店</h2>
+            <div class="shop-item" id="buyCat">
+                <span>购买小猫 (花费: 50)</span>
+                <span id="catCount">小猫数量: 0</span>
+            </div>
+            <div class="shop-item" id="buyChicken">
+                <span>购买鸡 (花费: 400)</span>
+                <span id="chickenCount">鸡数量: 0</span>
+            </div>
+            <div class="shop-item" id="buyCow">
+                <span>购买奶牛 (花费: 1000)</span>
+                <span id="cowCount">奶牛数量: 0</span>
+            </div>
+            <div class="shop-item" id="buyPig">
+                <span>购买猪 (花费: 1000)</span>
+                <span id="pigCount">猪数量: 0</span>
+            </div>
+            <div class="shop-item" id="buyFryingPan">
+                <span>购买平底锅 (花费: 5000)</span>
+                <span id="fryingPanCount">平底锅: 0</span>
+            </div>
+            <div class="shop-item" id="buyCatTower">
+                <span>购买猫爬架 (花费: 1400)</span>
+                <span id="catTowerCount">猫爬架: 0</span>
+            </div>
+            <div class="shop-item" id="buyFishTank">
+                <span>购买鱼缸 (花费: 20000)</span>
+                <span id="fishTankCount">鱼缸: 0</span>
+            </div>
+        </div>
+
+        <div class="animals-container" id="animalsContainer"></div>
+
+        <!-- 多功能厨房 -->
+        <div id="fryingPanContainer" class="special-container" style="display: none;">
+            <div class="container-header">
+                <img src="images/frying_pan.png" alt="平底锅" class="container-icon">
+                <h3>多功能厨房 (容量: <span id="fryingPanCapacity">0/0</span>)</h3>
+            </div>
+            <div class="container-controls">
+                <button id="addEggBtn" class="special-btn">放入鸡蛋 (1/次)</button>
+                <button id="fryEggBtn" class="special-btn">开始煎蛋</button>
+                <button id="addFishToPanBtn" class="special-btn">开始烤鱼</button>
+                <button id="addGrilledChickenBtn" class="special-btn" style="background-color: #FF9800; color: white;">制作烤鸡 (消耗1只鸡)</button>
+                <button id="addSausageBtn" class="special-btn" style="background-color: #795548; color: white;">制作烤肠 (消耗1头猪)</button>
+            </div>
+            <div class="container-content">
+                <div class="egg-counter">
+                    <span>待煎鸡蛋: </span>
+                    <span id="rawEggCount">0</span>
+                </div>
+                <div id="fryingItemsContainer"></div>
+                <div class="frying-area" id="fryingArea"></div>
+            </div>
+        </div>
+
+        <!-- 猫爬架 -->
+        <div id="catTowerContainer" class="special-container" style="display: none;">
+            <div class="container-header">
+                <img src="images/cat_tower.png" alt="猫爬架" class="container-icon">
+                <h3>猫咪乐园 (容量: <span id="catTowerCapacity">0/0</span>)</h3>
+                <button id="addCatToTowerBtn" class="special-btn">放入猫咪</button>
+            </div>
+            <div class="container-content" id="catTowerArea"></div>
+        </div>
+
+        <!-- 鱼缸 -->
+        <div id="fishTankContainer" class="special-container" style="display: none;">
+            <button id="buyFish" class="special-btn" style="width: 100%; margin-bottom: 10px;">
+                <span>购买鱼 (花费: 700)</span>
+                <span id="fishCount">鱼数量: 0</span>
+            </button>
+            <button id="buySquid" class="special-btn" style="width: 100%; margin-bottom: 10px;">
+                <span>购买墨鱼 (花费: 5500)</span>
+                <span id="squidCount">墨鱼数量: 0</span>
+            </button>
+            <div class="container-header">
+                <img src="images/fish_tank.png" alt="鱼缸" class="container-icon">
+                <h3>水族馆</h3>
+            </div>
+            <div class="container-content" id="fishTankArea"></div>
+        </div>
+
+        <!-- 特殊物品收集窗口 -->
+        <div id="specialItemsContainer" class="special-container" style="display: block;">
+            <div class="container-header">
+                <h3>特殊物品收集</h3>
+            </div>
+            <div class="container-content" id="specialItemsDisplay">
+                <!-- 物品将在这里动态添加 -->
+            </div>
+            <div id="collectionStats" style="margin-top: 10px; font-size: 14px;">
+                <div>普通物品: <span id="commonCount">0</span></div>
+                <div>罕见物品: <span id="uncommonCount">0</span></div>
+                <div>稀有物品: <span id="rareCount">0</span></div>
+                <div>史诗物品: <span id="epicCount">0</span></div>
+                <div>传奇物品: <span id="legendaryCount">0</span></div>
+            </div>
+        </div>
+
+        <div id="musicHint">点击页面启用声音</div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
